@@ -26,12 +26,12 @@ export default class ChaserShip extends Entity {
             }
 
             if (this.state == this.states.CHASE) {
-                var dx = this.scene.player.x - this.x;
-                var dy = this.scene.player.y - this.y;
+                let dx = this.scene.player.x - this.x;
+                let dy = this.scene.player.y - this.y;
 
-                var angle = Math.atan2(dy, dx);
+                let angle = Math.atan2(dy, dx);
 
-                var speed = 100;
+                let speed = 100;
                 this.body.setVelocity(
                     Math.cos(angle) * speed,
                     Math.sin(angle) * speed

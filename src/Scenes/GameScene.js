@@ -3,6 +3,8 @@ import Player from '../Objects/Player';
 import ChaserShip from '../Objects/ChaserShip';
 import GunShip from '../Objects/GunShip';
 import CarrierShip from '../Objects/CarrierShip';
+import ScrollingBackground from "../Objects/ScrollingBackground";
+
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -72,13 +74,18 @@ export default class GameScene extends Phaser.Scene {
       laser: this.sound.add("sndLaser")
     };
 
+    this.backgrounds = [];
+    for (let i = 0; i < 5; i++) {
+      let bg = new ScrollingBackground(this, "sprBg0", i * 10);
+      this.backgrounds.push(bg);
+    }
+
     this.player = new Player(
         this,
         this.game.config.width * 0.5,
         this.game.config.height * 0.5,
         "sprPlayer"
     );
-    console.log(this.player);
 
     this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -93,7 +100,7 @@ export default class GameScene extends Phaser.Scene {
     this.time.addEvent({
       delay: 1000,
       callback: function() {
-        var enemy = null;
+        let enemy = null;
 
         if (Phaser.Math.Between(0, 10) >= 3) {
           enemy = new GunShip(
@@ -159,9 +166,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   getEnemiesByType(type) {
-    var arr = [];
-    for (var i = 0; i < this.enemies.getChildren().length; i++) {
-      var enemy = this.enemies.getChildren()[i];
+    let arr = [];
+    for (let i = 0; i < this.enemies.getChildren().length; i++) {
+      let enemy = this.enemies.getChildren()[i];
       if (enemy.getData("type") == type) {
         arr.push(enemy);
       }
@@ -170,7 +177,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-
     if (!this.player.getData("isDead")) {
       this.player.update();
       if (this.keyW.isDown) {
@@ -195,8 +201,8 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    for (var i = 0; i < this.enemies.getChildren().length; i++) {
-      var enemy = this.enemies.getChildren()[i];
+    for (let i = 0; i < this.enemies.getChildren().length; i++) {
+      let enemy = this.enemies.getChildren()[i];
 
       enemy.update();
 
@@ -213,8 +219,8 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    for (var i = 0; i < this.enemyLasers.getChildren().length; i++) {
-      var laser = this.enemyLasers.getChildren()[i];
+    for (let i = 0; i < this.enemyLasers.getChildren().length; i++) {
+      let laser = this.enemyLasers.getChildren()[i];
       laser.update();
       if (laser.x < -laser.displayWidth ||
           laser.x > this.game.config.width + laser.displayWidth ||
@@ -226,8 +232,8 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    for (var i = 0; i < this.playerLasers.getChildren().length; i++) {
-      var laser = this.playerLasers.getChildren()[i];
+    for (let i = 0; i < this.playerLasers.getChildren().length; i++) {
+      let laser = this.playerLasers.getChildren()[i];
       laser.update();
       if (laser.x < -laser.displayWidth ||
           laser.x > this.game.config.width + laser.displayWidth ||
@@ -237,6 +243,10 @@ export default class GameScene extends Phaser.Scene {
           laser.destroy();
         }
       }
+    }
+
+    for (let i = 0; i < this.backgrounds.length; i++) {
+      this.backgrounds[i].update();
     }
   }
 };
