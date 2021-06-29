@@ -1,23 +1,20 @@
 import 'phaser';
+import config from '../Config/config';
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
     super('Preloader');
   }
 
-  init () {
-    this.readyCount = 0;
-  }
-
   preload () {
     // add logo image
-    this.add.image(400, 200, 'logo');
+    this.add.image(config.width / 2, config.height / 2 - 250, 'logo');
 
     // display progress bar
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(240, 270, 320, 50);
+    progressBox.fillRect(config.width / 2 - 160, config.height / 2 - 150, 320, 50);
 
     let width = this.cameras.main.width;
     let height = this.cameras.main.height;
@@ -59,7 +56,7 @@ export default class PreloaderScene extends Phaser.Scene {
       percentText.setText(parseInt(value * 100) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(250, 280, 300 * value, 30);
+      progressBar.fillRect(config.width / 2 - 150, config.height / 2 - 140, 300 * value, 30);
     });
 
     // update file progress text
@@ -86,6 +83,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('box', 'src/assets/ui/grey_box.png');
     this.load.image('checkedBox', 'src/assets/ui/blue_boxCheckmark.png');
     this.load.audio('bgMusic', ['src/assets/TownTheme.mp3']);
+  }
+
+  init () {
+    this.readyCount = 0;
   }
 
   ready () {

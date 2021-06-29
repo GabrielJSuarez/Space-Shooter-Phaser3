@@ -3,8 +3,9 @@ import 'phaser';
 export default {
   type: Phaser.AUTO,
   parent: 'phaser-example',
-  width: 480,
-  height: 640,
+  width:  window.innerWidth,
+  height:   window.innerHeight,
+  mode: Phaser.Scale.NONE,
   backgroundColor: "black",
   physics: {
     default: "arcade",
