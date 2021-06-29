@@ -6,17 +6,6 @@ export default class SceneGameOver extends Phaser.Scene {
     constructor() {
         super({ key: "SceneGameOver" });
     }
-    preload() {
-        this.load.audio("sndBtnDown", "src/assets/shooter/sndBtnDown.wav");
-        this.load.audio("sndBtnOver", "src/assets/shooter/sndBtnOver.wav");
-
-        this.load.image("sprBg0", "src/assets/shooter/sprBg0.png");
-        this.load.image("sprBg1", "src/assets/shooter/sprBg1.png");
-
-        this.load.image("sprBtnRestart", "src/assets/shooter/sprBtnRestart.png");
-        this.load.image("sprBtnRestartDown", "src/assets/shooter/sprBtnRestartDown.png");
-        this.load.image("sprBtnRestartHover", "src/assets/shooter/sprBtnRestartHover.png");
-    }
 
     create() {
         this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
@@ -61,16 +50,16 @@ export default class SceneGameOver extends Phaser.Scene {
         }, this);
 
         this.backgrounds = [];
-        for (var i = 0; i < 5; i++) {
-            var keys = ["sprBg0", "sprBg1"];
-            var key = keys[Phaser.Math.Between(0, keys.length - 1)];
-            var bg = new ScrollingBackground(this, key, i * 10);
+        for (let i = 0; i < 5; i++) {
+            let keys = ["sprBg0", "sprBg1"];
+            let key = keys[Phaser.Math.Between(0, keys.length - 1)];
+            let bg = new ScrollingBackground(this, key, i * 10);
             this.backgrounds.push(bg);
         }
     }
 
     update() {
-        for (var i = 0; i < this.backgrounds.length; i++) {
+        for (let i = 0; i < this.backgrounds.length; i++) {
             this.backgrounds[i].update();
         }
     }

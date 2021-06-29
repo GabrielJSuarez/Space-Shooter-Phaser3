@@ -11,35 +11,6 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
   }
 
-  preload () {
-    // load images
-    this.load.image('logo', 'src/assets/logo.png');
-    this.load.image("sprBg0", "src/assets/shooter/sprBg0.png");
-    this.load.image("sprBg1", "src/assets/shooter/sprBg1.png");
-    this.load.spritesheet("sprExplosion", "src/assets/shooter/sprExplosion.png", {
-      frameWidth: 32,
-      frameHeight: 32
-    });
-    this.load.spritesheet("sprEnemy0", "src/assets/shooter/sprEnemy0.png", {
-      frameWidth: 16,
-      frameHeight: 16
-    });
-    this.load.image("sprEnemy1", "src/assets/shooter/sprEnemy1.png");
-    this.load.spritesheet("sprEnemy2", "src/assets/shooter/sprEnemy2.png", {
-      frameWidth: 16,
-      frameHeight: 16
-    });
-    this.load.image("sprLaserEnemy0", "src/assets/shooter/sprLaserEnemy0.png");
-    this.load.image("sprLaserPlayer", "src/assets/shooter/sprLaserPlayer.png");
-    this.load.spritesheet("sprPlayer", "src/assets/shooter/sprPlayer.png", {
-      frameWidth: 16,
-      frameHeight: 16
-    });
-
-    this.load.audio("sndExplode0", "src/assets/shooter/sndExplode0.wav");
-    this.load.audio("sndExplode1", "src/assets/shooter/sndExplode1.wav");
-    this.load.audio("sndLaser", "src/assets/shooter/sndLaser.wav");
-  }
   create() {
     this.anims.create({
       key: "sprEnemy0",
