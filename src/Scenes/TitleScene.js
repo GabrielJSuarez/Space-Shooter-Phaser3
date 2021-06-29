@@ -1,10 +1,16 @@
 import 'phaser';
 import config from '../Config/config';
 import Button from '../Objects/Button';
+import ScrollingBackground from "../Objects/ScrollingBackground";
 
 export default class TitleScene extends Phaser.Scene {
   constructor () {
     super('Title');
+  }
+
+  preload() {
+    this.load.image("sprBg0", "src/assets/shooter/sprBg0.png");
+    this.load.image("sprBg1", "src/assets/shooter/sprBg1.png");
   }
 
   create () {
@@ -24,6 +30,23 @@ export default class TitleScene extends Phaser.Scene {
       this.model.bgMusicPlaying = true;
       this.sys.game.globals.bgMusic = this.bgMusic;
     }
+
+    this.title = this.add.text(this.game.config.width * 0.5, 128, "SPACE SHOOTER", {
+      fontFamily: 'monospace',
+      fontSize: 48,
+      fontStyle: 'bold',
+      color: '#ffffff',
+      align: 'center'
+    });
+    this.title.setOrigin(0.5);
+
+    this.backgrounds = [];
+    for (let i = 0; i < 5; i++) {
+      let keys = ["sprBg0", "sprBg1"];
+      let key = keys[Phaser.Math.Between(0, keys.length - 1)];
+      let bg = new ScrollingBackground(this, key, i * 10);
+      this.backgrounds.push(bg);
+    }
   }
 
   centerButton (gameObject, offset = 0) {
@@ -38,5 +61,10 @@ export default class TitleScene extends Phaser.Scene {
         gameText,
         gameButton
     );
+  }
+  update() {
+    for (let i = 0; i < this.backgrounds.length; i++) {
+      this.backgrounds[i].update();
+    }
   }
 };
