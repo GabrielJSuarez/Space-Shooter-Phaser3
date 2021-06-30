@@ -1,7 +1,8 @@
 import 'phaser';
+import Asteroid1 from '../Objects/asteroid1';
 import Asteroid2 from '../Objects/asteroid2';
 import Asteroid3 from '../Objects/asteroid3';
-import Asteroid1 from '../Objects/asteroid1';
+import Asteroid4 from '../Objects/asteroid4';
 
 let bg;
 let stars;
@@ -180,7 +181,7 @@ export default class GameScene extends Phaser.Scene {
         let enemy = null;
 
         if (Phaser.Math.Between(0, 10) >= 2) {
-          enemy = new Asteroid3(
+          enemy = new Asteroid1(
               this,
               // Create enemy avoiding automatic collision
               Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
@@ -205,7 +206,7 @@ export default class GameScene extends Phaser.Scene {
           }
         }
         else {
-          enemy = new Asteroid1(
+          enemy = new Asteroid4(
               this,
               Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
               Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)

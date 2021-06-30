@@ -1,6 +1,6 @@
 import Entity from "./Entities";
 
-export default class Asteroid1 extends Entity {
+export default class Asteroid4 extends Entity {
     constructor(scene, x, y) {
         super(scene, x, y, "asteroid4-anim", "Asteroid4");
         this.play("asteroid4-anim");
