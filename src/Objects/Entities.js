@@ -1,6 +1,6 @@
 import 'phaser';
 
-export class Entity extends Phaser.GameObjects.Sprite {
+export default class Entity extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, key, type) {
         super(scene, x, y, key);
 
@@ -11,6 +11,7 @@ export class Entity extends Phaser.GameObjects.Sprite {
         this.setData("isDead", false);
     }
 
+    /*
     explode(canDestroy) {
         if (!this.getData("isDead")) {
             // Set the texture to the explosion image, then play the animation
@@ -36,6 +37,8 @@ export class Entity extends Phaser.GameObjects.Sprite {
             this.setData("isDead", true);
         }
     }
+
+     */
 }
 
 

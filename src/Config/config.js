@@ -2,17 +2,13 @@ import 'phaser';
 
 export default {
   type: Phaser.AUTO,
+  width: 800,
+  height: 600,
   parent: 'phaser-example',
-  width:  window.innerWidth,
-  height:   window.innerHeight,
-  mode: Phaser.Scale.NONE,
-  backgroundColor: "black",
   physics: {
-    default: "arcade",
+    default: 'arcade',
     arcade: {
-      gravity: { x: 0, y: 0 }
+      debug: false
     }
-  },
-  pixelArt: true,
-  roundPixels: true
+  }
 };

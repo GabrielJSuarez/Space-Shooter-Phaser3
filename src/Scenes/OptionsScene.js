@@ -1,6 +1,7 @@
 import 'phaser';
 import config from '../Config/config';
 import Button from '../Objects/Button';
+import ScrollingBackground from "../Objects/ScrollingBackground";
 
 export default class OptionsScene extends Phaser.Scene {
   constructor () {
@@ -34,6 +35,13 @@ export default class OptionsScene extends Phaser.Scene {
     this.menuButton = new Button(this, config.width/2, config.height/2 + 150, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
     this.updateAudio();
+
+    this.backgrounds = [];
+    for (let i = 0; i < 5; i++) {
+      let key = ["background"];
+      let bg = new ScrollingBackground(this, key, i * 10);
+      this.backgrounds.push(bg);
+    }
   }
 
   updateAudio() {

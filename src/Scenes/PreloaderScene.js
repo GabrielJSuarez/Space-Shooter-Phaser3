@@ -119,6 +119,14 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image("sprBtnRestart", "src/assets/shooter/sprBtnRestart.png");
     this.load.image("sprBtnRestartDown", "src/assets/shooter/sprBtnRestartDown.png");
     this.load.image("sprBtnRestartHover", "src/assets/shooter/sprBtnRestartHover.png");
+
+    this.load.image('background', 'src/assets/space/nebula.jpg');
+    this.load.image('stars', 'src/assets/space/stars.png');
+    this.load.image('ship', 'src/assets/space/ship.png');
+    this.load.atlas('space', 'src/assets/space/space.png', 'src/assets/space/space.json');
+
+    this.load.image('spark0', 'src/assets/space/blue.png');
+    this.load.image('spark1', 'src/assets/space/red.png');
   }
 
   init () {

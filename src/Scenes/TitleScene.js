@@ -37,8 +37,7 @@ export default class TitleScene extends Phaser.Scene {
 
     this.backgrounds = [];
     for (let i = 0; i < 5; i++) {
-      let keys = ["sprBg0", "sprBg1"];
-      let key = keys[Phaser.Math.Between(0, keys.length - 1)];
+      let key = ["background"];
       let bg = new ScrollingBackground(this, key, i * 10);
       this.backgrounds.push(bg);
     }
@@ -56,10 +55,5 @@ export default class TitleScene extends Phaser.Scene {
         gameText,
         gameButton
     );
-  }
-  update() {
-    for (let i = 0; i < this.backgrounds.length; i++) {
-      this.backgrounds[i].update();
-    }
   }
 };
