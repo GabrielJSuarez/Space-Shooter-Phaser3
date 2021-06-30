@@ -10,6 +10,8 @@ let bullets;
 let lastFired = 0;
 let cursors;
 let fire;
+let score = 0;
+let scoreText;
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -217,6 +219,17 @@ export default class GameScene extends Phaser.Scene {
       loop: true
     });
 
+    // Initialize score text
+    scoreText = this.add.text(ship.x -380 , ship.y - 280 , "score: ", {
+      fontFamily: 'monospace',
+      fontSize: 28,
+      fontStyle: 'bold',
+      color: '#ffffff',
+      align: 'center'
+    });
+    scoreText.setOrigin(0)
+    scoreText.setDepth(3);
+
     // Collision/Overlap calls
     this.physics.add.overlap(bullets, this.enemies, this.destroyAsteroids, null, this);
     this.physics.add.collider(ship, this.enemies, this.hitByAsteroid, null, this);
@@ -271,6 +284,9 @@ export default class GameScene extends Phaser.Scene {
 
   // Callback Function for hitting an asteroid
   destroyAsteroids(ship, asteroid) {
+    score += 10;
+    scoreText.setText('Score: ' + score);
+
     let emitter0 = this.particleEmitter('spark0', asteroid);
     let emitter1 = this.particleEmitter('spark1', asteroid);
 
@@ -293,8 +309,9 @@ export default class GameScene extends Phaser.Scene {
     // Asteroid Movement, bounds
     for (let i = 0; i < this.enemies.getChildren().length; i++){
       let enemy = this.enemies.getChildren()[i];
-      enemy.x += 2;
-      enemy.y += 2;
+      // Add difficulty spike based on the score
+      enemy.x += (score * 0.020) / 2 || 10 * 0.020;
+      enemy.y += (score * 0.020) / 2 || 10 * 0.020;
       if (enemy.x > 6000)
       {
         enemy.destroy();
@@ -346,5 +363,9 @@ export default class GameScene extends Phaser.Scene {
 
     stars.tilePositionX += ship.body.deltaX() * 2;
     stars.tilePositionY += ship.body.deltaY() * 2;
+
+    // Updates the position of the score to let it stay always on the top left corner
+    scoreText.x = ship.x - 380;
+    scoreText.y = ship.y - 280;
   };
 };
