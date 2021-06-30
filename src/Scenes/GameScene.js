@@ -88,7 +88,7 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({ key: 'asteroid4-anim', frames: this.anims.generateFrameNumbers('asteroid4-sheet', { start: 0, end: 23 }), frameRate: 20, repeat: -1 });
 
     //  World size is 8000 x 6000
-    bg = this.add.tileSprite(400, 300, 800, 600, 'background').setScrollFactor(0);
+    bg = this.add.tileSprite(400, 300, 1440, 980, 'background').setScrollFactor(0);
 
     //  Add our planets, etc
     this.add.image(512, 680, 'space', 'blue-planet').setOrigin(0).setScrollFactor(0.6);
@@ -180,8 +180,9 @@ export default class GameScene extends Phaser.Scene {
         if (Phaser.Math.Between(0, 10) >= 2) {
           enemy = new Asteroid3(
               this,
-              Phaser.Math.Between(-6000, 6000),
-              Phaser.Math.Between(-8000, 8000)
+              // Create enemy avoiding automatic collision
+              Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
+              Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
           );
           //enemy = this.physics.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000), 'asteroid1', 'asteroid1-anim');
         }
@@ -189,23 +190,23 @@ export default class GameScene extends Phaser.Scene {
           if (this.getEnemiesByType("Asteroid2").length < 3) {
             enemy = new Asteroid2(
                 this,
-                Phaser.Math.Between(-6000, 6000),
-                Phaser.Math.Between(-8000, 8000)
+                Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
+                Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
             );
             //enemy = this.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000)).play('asteroid2-anim');
           } else {
             enemy = new Asteroid3(
                 this,
-                Phaser.Math.Between(-6000, 6000),
-                Phaser.Math.Between(-8000, 8000)
+                Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
+                Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
             );
           }
         }
         else {
           enemy = new Asteroid1(
               this,
-              Phaser.Math.Between(-6000, 6000),
-              Phaser.Math.Between(-8000, 8000)
+              Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
+              Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
           );
           //enemy = this.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000)).play('asteroid3-anim');
         }
@@ -231,7 +232,7 @@ export default class GameScene extends Phaser.Scene {
     scoreText.setDepth(3);
 
     // Collision/Overlap calls
-    this.physics.add.overlap(bullets, this.enemies, this.destroyAsteroids, null, this);
+    this.physics.add.collider(bullets, this.enemies, this.destroyAsteroids, null, this);
     this.physics.add.collider(ship, this.enemies, this.hitByAsteroid, null, this);
   }
 
@@ -264,6 +265,7 @@ export default class GameScene extends Phaser.Scene {
 
   // Callback Function for being hit
   hitByAsteroid(ship) {
+    score = 0;
     this.physics.pause();
     ship.setTint(0xff0000);
 
