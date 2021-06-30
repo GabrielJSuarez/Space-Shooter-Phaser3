@@ -8,19 +8,19 @@ export default class PreloaderScene extends Phaser.Scene {
 
   preload () {
     // add logo image
-    this.add.image(config.width / 2, config.height / 2 - 250, 'logo');
+    this.add.image(config.width / 2, config.height / 2 - 200, 'logo').setScale(0.6);
 
     // display progress bar
     let progressBar = this.add.graphics();
     let progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(config.width / 2 - 160, config.height / 2 - 150, 320, 50);
+    progressBox.fillRect(config.width / 2 - 160, config.height / 2 - 70, 320, 50);
 
     let width = this.cameras.main.width;
     let height = this.cameras.main.height;
     let loadingText = this.make.text({
       x: width / 2,
-      y: height / 2 - 50,
+      y: height / 2 + 50,
       text: 'Loading...',
       style: {
         font: '20px monospace',
@@ -31,7 +31,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     let percentText = this.make.text({
       x: width / 2,
-      y: height / 2 - 5,
+      y: height / 2 + 5,
       text: '0%',
       style: {
         font: '18px monospace',
@@ -42,7 +42,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     let assetText = this.make.text({
       x: width / 2,
-      y: height / 2 + 50,
+      y: height / 2 + 100,
       text: '',
       style: {
         font: '18px monospace',
@@ -56,7 +56,7 @@ export default class PreloaderScene extends Phaser.Scene {
       percentText.setText(parseInt(value * 100) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(config.width / 2 - 150, config.height / 2 - 140, 300 * value, 30);
+      progressBar.fillRect(config.width / 2 - 150, config.height / 2 - 60, 300 * value, 30);
     });
 
     // update file progress text
