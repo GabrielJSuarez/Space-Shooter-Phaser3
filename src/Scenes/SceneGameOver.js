@@ -10,7 +10,7 @@ export default class SceneGameOver extends Phaser.Scene {
     }
 
     create() {
-        this.title = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
+        this.title = this.add.text(this.game.config.width * 0.5, 128, "GIT GUD SCRUB", {
             fontFamily: 'monospace',
             fontSize: 48,
             fontStyle: 'bold',

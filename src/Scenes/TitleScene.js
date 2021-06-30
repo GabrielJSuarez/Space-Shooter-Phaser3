@@ -27,7 +27,7 @@ export default class TitleScene extends Phaser.Scene {
       this.sys.game.globals.bgMusic = this.bgMusic;
     }
 
-    this.title = this.add.text(this.game.config.width * 0.5, 108, "SPACE SHOOTER", {
+    this.title = this.add.text(this.game.config.width * 0.5, 108, "Surviving Space", {
       fontFamily: 'monospace',
       fontSize: 48,
       fontStyle: 'bold',

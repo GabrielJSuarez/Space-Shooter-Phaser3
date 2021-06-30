@@ -68,8 +68,6 @@ export default class GameScene extends Phaser.Scene {
     // Sounds
     this.sfx = {
       explosions: [
-        //this.sound.add("sndExplode0"),
-        //this.sound.add("sndExplode1"),
           this.sound.add("explosion")
       ],
       laser: this.sound.add("blaster")
@@ -99,7 +97,6 @@ export default class GameScene extends Phaser.Scene {
     this.add.image(908, 3922, 'space', 'gas-giant').setOrigin(0).setScrollFactor(0.6);
     this.add.image(3140, 2974, 'space', 'brown-planet').setOrigin(0).setScrollFactor(0.6).setScale(0.8).setTint(0x882d2d);
     this.add.image(6052, 4280, 'space', 'purple-planet').setOrigin(0).setScrollFactor(0.6);
-    this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'green-orb').setOrigin(0).setScrollFactor(0.6);
 
     // Galaxy
     let galaxy = this.add.image(5345 + 1024, 327 + 1024, 'space', 'galaxy').setBlendMode(1).setScrollFactor(0.6);
@@ -107,7 +104,8 @@ export default class GameScene extends Phaser.Scene {
     // Extras
     for (let i = 0; i < 8; i++)
     {
-      this.add.image(Phaser.Math.Between(0, 8000), Phaser.Math.Between(0, 6000), 'space', 'eyes').setBlendMode(1).setScrollFactor(0.8);
+      this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'green-orb').setOrigin(0).setScrollFactor(0.6);
+      this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'eyes').setBlendMode(1).setScrollFactor(0.8);
     }
 
     stars = this.add.tileSprite(400, 300, 800, 600, 'stars').setScrollFactor(0);
@@ -187,7 +185,6 @@ export default class GameScene extends Phaser.Scene {
               Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
               Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
           );
-          //enemy = this.physics.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000), 'asteroid1', 'asteroid1-anim');
         }
         else if (Phaser.Math.Between(0, 10) >= 5) {
           if (this.getEnemiesByType("Asteroid2").length < 3) {
@@ -196,7 +193,6 @@ export default class GameScene extends Phaser.Scene {
                 Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
                 Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
             );
-            //enemy = this.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000)).play('asteroid2-anim');
           } else {
             enemy = new Asteroid3(
                 this,
@@ -211,7 +207,6 @@ export default class GameScene extends Phaser.Scene {
               Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
               Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
           );
-          //enemy = this.add.sprite(Phaser.Math.Between(-6000, 6000),  Phaser.Math.Between(-8000, 8000)).play('asteroid3-anim');
         }
 
         if (enemy !== null) {
@@ -231,6 +226,7 @@ export default class GameScene extends Phaser.Scene {
       color: '#ffffff',
       align: 'center'
     });
+
     scoreText.setOrigin(0)
     scoreText.setDepth(3);
 
@@ -260,7 +256,6 @@ export default class GameScene extends Phaser.Scene {
       angle: { min: 0, max: 360 },
       scale: { start: 0.5, end: 0 },
       blendMode: 'SCREEN',
-      //active: false,
       lifespan: 600,
       gravityY: 800
     });
@@ -277,7 +272,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.sfx.explosions[Phaser.Math.Between(0, this.sfx.explosions.length - 1)].play();
 
-    this.time.addEvent({ // go to game over scene
+    // go to game over scene
+    this.time.addEvent({
       delay: 2000,
       callback: function() {
         this.scene.start("SceneGameOver");
@@ -298,7 +294,8 @@ export default class GameScene extends Phaser.Scene {
     this.sfx.explosions[Phaser.Math.Between(0, this.sfx.explosions.length - 1)].play();
     asteroid.destroy();
 
-    this.time.addEvent({ // go to game over scene
+    // Make particles disappear
+    this.time.addEvent({
       delay: 1000,
       callback: function() {
         emitter0.explode();
@@ -314,15 +311,17 @@ export default class GameScene extends Phaser.Scene {
     // Asteroid Movement, bounds
     for (let i = 0; i < this.enemies.getChildren().length; i++){
       let enemy = this.enemies.getChildren()[i];
+
       // Add difficulty spike based on the score
       enemy.x += (score * 0.020) / 2 || 10 * 0.020;
       enemy.y += (score * 0.020) / 2 || 10 * 0.020;
-      if (enemy.x > 6000)
+
+      if (enemy.x > 6000 || enemy.x < -6000)
       {
         enemy.destroy();
       }
 
-      if (enemy.y > 8000) {
+      if (enemy.y > 8000 || enemy.y < -8000) {
         enemy.destroy();
       }
     }
@@ -363,6 +362,7 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
+    // Update tile position
     bg.tilePositionX += ship.body.deltaX() * 0.5;
     bg.tilePositionY += ship.body.deltaY() * 0.5;
 
