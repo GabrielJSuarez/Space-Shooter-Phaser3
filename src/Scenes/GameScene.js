@@ -67,10 +67,11 @@ export default class GameScene extends Phaser.Scene {
     // Sounds
     this.sfx = {
       explosions: [
-        this.sound.add("sndExplode0"),
-        this.sound.add("sndExplode1")
+        //this.sound.add("sndExplode0"),
+        //this.sound.add("sndExplode1"),
+          this.sound.add("explosion")
       ],
-      laser: this.sound.add("sndLaser")
+      laser: this.sound.add("blaster")
     };
 
     //  Prepare some spritesheets and animations
@@ -173,7 +174,8 @@ export default class GameScene extends Phaser.Scene {
 
     // Add Enemies
     this.time.addEvent({
-      delay: 100,
+      // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
+      delay: score > 500 ? 50 : 100,
       callback: function() {
         let enemy = null;
 
