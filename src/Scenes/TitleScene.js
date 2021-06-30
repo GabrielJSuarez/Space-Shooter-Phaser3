@@ -9,8 +9,9 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create () {
+
     // Game
-    this.gameButton = new Button(this, config.width/2, config.height/2 - 100, 'sprBtnPlay', 'sprBtnPlayDown', '', 'Game');
+    this.gameButton = new Button(this, config.width/2, config.height/2 - 100, 'blueButton1', 'blueButton2', 'Start', 'Game');
 
     // Options
     this.optionsButton = new Button(this, config.width/2, config.height/2, 'blueButton1', 'blueButton2', 'Options', 'Options');
@@ -26,7 +27,7 @@ export default class TitleScene extends Phaser.Scene {
       this.sys.game.globals.bgMusic = this.bgMusic;
     }
 
-    this.title = this.add.text(this.game.config.width * 0.5, 128, "SPACE SHOOTER", {
+    this.title = this.add.text(this.game.config.width * 0.5, 108, "SPACE SHOOTER", {
       fontFamily: 'monospace',
       fontSize: 48,
       fontStyle: 'bold',

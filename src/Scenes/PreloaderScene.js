@@ -84,17 +84,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('checkedBox', 'src/assets/ui/blue_boxCheckmark.png');
     this.load.audio('bgMusic', ['src/assets/space/Dafunk - Hardcore Power (We Believe In Goa - Remix).m4a']);
     this.load.image('logo', 'src/assets/logo.png');
-    this.load.audio("sndExplode0", "src/assets/shooter/sndExplode0.wav");
-    this.load.audio("sndExplode1", "src/assets/shooter/sndExplode1.wav");
     this.load.audio("explosion", "src/assets/space/explosion.mp3")
     this.load.audio('blaster', "src/assets/space/blaster.mp3");
-    this.load.audio("sndBtnDown", "src/assets/shooter/sndBtnDown.wav");
-    this.load.audio("sndBtnOver", "src/assets/shooter/sndBtnOver.wav");
-    this.load.image("sprBtnPlay", "src/assets/shooter/sprBtnPlay.png");
-    this.load.image("sprBtnPlayDown", "src/assets/shooter/sprBtnPlayDown.png");
-    this.load.image("sprBtnRestart", "src/assets/shooter/sprBtnRestart.png");
-    this.load.image("sprBtnRestartDown", "src/assets/shooter/sprBtnRestartDown.png");
-    this.load.image("sprBtnRestartHover", "src/assets/shooter/sprBtnRestartHover.png");
 
     this.load.image('background', 'src/assets/space/nebula.jpg');
     this.load.image('stars', 'src/assets/space/stars.png');
