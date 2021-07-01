@@ -1,8 +1,4 @@
 import 'phaser';
-import Asteroid1 from '../Objects/asteroid1';
-import Asteroid2 from '../Objects/asteroid2';
-import Asteroid3 from '../Objects/asteroid3';
-import Asteroid4 from '../Objects/asteroid4';
 
 let bg;
 let stars;
@@ -211,7 +207,7 @@ export default class GameScene extends Phaser.Scene {
     // Collision/Overlap calls
     this.physics.add.collider(bullets, this.enemies, this.destroyAsteroids, null, this);
     this.physics.add.collider(ship, this.enemies, this.hitByAsteroid, null, this);
-    this.physics.add.collider(this.enemies, this.enemies, this.asteroidSelCollision, null, this);
+    this.physics.add.collider(this.enemies, this.enemies, this.asteroidSelfCollision, null, this);
   }
 
   // Generate Particles for destruction physics
@@ -274,7 +270,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   // Callback Function for asteroids colliding with eachother
-  asteroidSelCollision(asteroid1, asteroid2) {
+  asteroidSelfCollision(asteroid1, asteroid2) {
     let emitter0 = this.particleEmitter('spark0', asteroid1);
     let emitter1 = this.particleEmitter('spark1', asteroid1);
     let emitter3 = this.particleEmitter('spark0', asteroid2);
