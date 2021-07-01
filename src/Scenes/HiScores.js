@@ -3,6 +3,7 @@ import ScrollingBackground from "../Objects/ScrollingBackground";
 import Button from "../Objects/Button";
 import config from "../Config/config";
 import asyncScores from "../Objects/asyncScores";
+import getDataFromStorage from "../Objects/localStorage";
 
 export default class TitleScene extends Phaser.Scene {
     constructor () {
@@ -19,18 +20,13 @@ export default class TitleScene extends Phaser.Scene {
         });
         this.title.setOrigin(0.5);
 
-        // Get/set user on a local session
-        const setUser = (user = 'Anonymous') => localStorage.setItem('user', user);
-
-        const getUser = () => localStorage.getItem('user');
-
-        getUser() || setUser();
+        getDataFromStorage.getUser() || getDataFromStorage.setUser();
 
         // Set / Change your username
         const changeName = () => {
             // eslint-disable-next-line no-alert
-            const newUser = prompt('Enter your User Name', `${getUser()}`) || getUser();
-            if (newUser) setUser(newUser);
+            const newUser = prompt('Enter your User Name', `${getDataFromStorage.getUser()}`) || getDataFromStorage.getUser();
+            if (newUser) getDataFromStorage.setUser(newUser);
         };
 
         // Username's button
