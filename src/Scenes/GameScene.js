@@ -174,7 +174,7 @@ export default class GameScene extends Phaser.Scene {
     // Add Enemies
     this.time.addEvent({
       // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
-      delay: score > 500 ? 50 : 100,
+      delay: (score > 300) ? 50 : 100,
       callback: function() {
 
         if (Phaser.Math.Between(0, 10) >= 2) {
@@ -312,14 +312,15 @@ export default class GameScene extends Phaser.Scene {
     for (let i = 0; i < this.enemies.getChildren().length; i++){
       let enemy = this.enemies.getChildren()[i];
 
+      // Add movement with difficulty spike depending on the score
       if (enemy.texture.key === 'asteroid1-sheet') {
-        enemy.setVelocityX(200);
+        enemy.setVelocityX(200 + (score * 0.1));
       } else if (enemy.texture.key === 'asteroid2-sheet') {
-        enemy.setVelocityX(-200);
+        enemy.setVelocityX(-200 - (score * 0.1));
       } else if (enemy.texture.key === 'asteroid3-sheet') {
-        enemy.setVelocityY(200);
+        enemy.setVelocityY(200 + (score * 0.1));
       } else if (enemy.texture.key === 'asteroid5-sheet') {
-        enemy.setVelocityY(-200);
+        enemy.setVelocityY(-200 - (score * 0.1));
       }
 
       if (enemy.x > 6000 || enemy.x < -6000)
