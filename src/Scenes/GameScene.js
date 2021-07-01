@@ -170,6 +170,8 @@ export default class GameScene extends Phaser.Scene {
 
     // Enemies Group
     this.enemies = this.physics.add.group();
+    this.enemies.create(600, 500). play('asteroid1-anim');
+    this.enemies.create(600, 500). play('asteroid1-anim');
 
     // Add Enemies
     this.time.addEvent({
@@ -209,6 +211,7 @@ export default class GameScene extends Phaser.Scene {
     // Collision/Overlap calls
     this.physics.add.collider(bullets, this.enemies, this.destroyAsteroids, null, this);
     this.physics.add.collider(ship, this.enemies, this.hitByAsteroid, null, this);
+    this.physics.add.collider(this.enemies, this.enemies, this.asteroidSelCollision, null, this);
   }
 
   // Generate Particles for destruction physics
@@ -264,6 +267,31 @@ export default class GameScene extends Phaser.Scene {
       callback: function() {
         emitter0.explode();
         emitter1.explode();
+      },
+      callbackScope: this,
+      loop: false
+    });
+  }
+
+  // Callback Function for asteroids colliding with eachother
+  asteroidSelCollision(asteroid1, asteroid2) {
+    let emitter0 = this.particleEmitter('spark0', asteroid1);
+    let emitter1 = this.particleEmitter('spark1', asteroid1);
+    let emitter3 = this.particleEmitter('spark0', asteroid2);
+    let emitter4 = this.particleEmitter('spark1', asteroid2);
+
+    this.sfx.explosions[Phaser.Math.Between(0, this.sfx.explosions.length - 1)].play();
+    asteroid1.destroy();
+    asteroid2.destroy();
+
+    // Make particles disappear
+    this.time.addEvent({
+      delay: 1000,
+      callback: function() {
+        emitter0.explode();
+        emitter1.explode();
+        emitter3.explode();
+        emitter4.explode();
       },
       callbackScope: this,
       loop: false
