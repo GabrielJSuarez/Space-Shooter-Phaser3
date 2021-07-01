@@ -1,6 +1,5 @@
 import 'phaser';
 import asyncData from "../Objects/asyncScores";
-import {getUser} from "./HiScores";
 
 let bg;
 let stars;
@@ -38,7 +37,7 @@ export default class GameScene extends Phaser.Scene {
 
           fire: function (ship)
           {
-            this.lifespan = 1000;
+            this.lifespan = 800;
             this.setActive(true);
             this.setVisible(true);
             this.setAngle(ship.body.rotation);
@@ -104,6 +103,7 @@ export default class GameScene extends Phaser.Scene {
     {
       this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'green-orb').setOrigin(0).setScrollFactor(0.6);
       this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'eyes').setBlendMode(1).setScrollFactor(0.8);
+      this.add.image(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000), 'space', 'sun').setOrigin(0).setScrollFactor(0.6);
     }
 
     stars = this.add.tileSprite(400, 300, 800, 600, 'stars').setScrollFactor(0);
@@ -168,8 +168,6 @@ export default class GameScene extends Phaser.Scene {
 
     // Enemies Group
     this.enemies = this.physics.add.group();
-    this.enemies.create(600, 500). play('asteroid1-anim');
-    this.enemies.create(600, 500). play('asteroid1-anim');
 
     // Add Enemies
     this.time.addEvent({
