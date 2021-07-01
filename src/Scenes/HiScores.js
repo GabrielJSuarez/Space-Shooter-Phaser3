@@ -2,6 +2,7 @@ import 'phaser';
 import ScrollingBackground from "../Objects/ScrollingBackground";
 import Button from "../Objects/Button";
 import config from "../Config/config";
+import asyncScores from "../Objects/asyncScores";
 
 export default class TitleScene extends Phaser.Scene {
     constructor () {
@@ -18,22 +19,26 @@ export default class TitleScene extends Phaser.Scene {
         });
         this.title.setOrigin(0.5);
 
+        // Get/set user on a local session
         const setUser = (user = 'Anonymous') => localStorage.setItem('user', user);
 
         const getUser = () => localStorage.getItem('user');
 
         getUser() || setUser();
 
+        // Set / Change your username
         const changeName = () => {
             // eslint-disable-next-line no-alert
             const newUser = prompt('Enter your User Name', `${getUser()}`) || getUser();
             if (newUser) setUser(newUser);
         };
 
+        // Username's button
         // Change Name
         const nameButton = this.add.sprite(config.width/2 - 150, config.height/2 + 200, 'blueButton2');
-        const changeNameButton = this.add.text(config.width/2 - 225, config.height/2 + 185, 'Set Name', { fontSize: '32px', fill: '#fff' });
+        this.add.text(config.width/2 - 225, config.height/2 + 185, 'Set Name', { fontSize: '32px', fill: '#fff' });
 
+        // Button interactions
         nameButton.setInteractive();
         nameButton.on('pointerdown',() => { changeName(); });
 
@@ -66,33 +71,19 @@ export default class TitleScene extends Phaser.Scene {
             }
         };
 
-        let scores = [{
-            user: 'Gabriel',
-            score: '100'
-        }, {
-            user: 'Jose',
-            score: '100'
-        }, {
-            user: 'Jose',
-            score: '200'
-        }, {
-            user: 'Jose',
-            score: '200'
-        }, {
-            user: 'Jose',
-            score: '200'
-        }, {
-            user: 'Jose',
-            score: '300'
-        }]
-
         // Get the first 5 high scores in order
         const sortResults = scores => scores.sort((a, b) => (a.score > b.score ? -1 : 1)).slice(0, 5);
 
-        this.menuButton = new Button(this, config.width/2 + 150, config.height/2 + 200, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+        asyncScores.getAllScores()
+            .then(data => {
+                let results = data.result;
+                let sortedResults = sortResults(results);
+                // Call the render function
+                renderBoard(sortedResults);
+            })
+            .catch(error => console.log('Error', error));
 
-        // Call the render function
-        renderBoard(sortResults(scores));
+        this.menuButton = new Button(this, config.width/2 + 150, config.height/2 + 200, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
         this.backgrounds = [];
         for (let i = 0; i < 5; i++) {

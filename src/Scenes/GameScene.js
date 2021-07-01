@@ -1,4 +1,6 @@
 import 'phaser';
+import asyncData from "../Objects/asyncScores";
+import {getUser} from "./HiScores";
 
 let bg;
 let stars;
@@ -226,13 +228,23 @@ export default class GameScene extends Phaser.Scene {
 
   // Callback Function for being hit
   hitByAsteroid(ship) {
+    // Send final score to the Leaderboard API
+
+    asyncData.postGameScore({
+      "user": localStorage.getItem('user'),
+      "score": score
+    })
+
+    // Set the score back to 0
     score = 0;
+
+    // Stop Movement
     this.physics.pause();
     ship.disableBody(true, true);
 
+    // PLay effects
     this.particleEmitter('spark0', ship);
     this.particleEmitter('spark1', ship);
-
     this.sfx.explosions[Phaser.Math.Between(0, this.sfx.explosions.length - 1)].play();
 
     // go to game over scene
