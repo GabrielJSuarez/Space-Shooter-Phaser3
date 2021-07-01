@@ -5,7 +5,8 @@ export default class Asteroid3 extends Entity {
         super(scene, x, y, "asteroid3-anim", "Asteroid3");
         this.play("asteroid3-anim");
 
-        this.body.velocity.y = Phaser.Math.Between(50, 100);
-        this.body.velocity.x = Phaser.Math.Between(-50, 100);
+        this.body.setVelocityX(Phaser.Math.Between(100, 200));
+
+        this.body.setVelocityY(Phaser.Math.Between(100, 200));
     }
 }

@@ -176,43 +176,20 @@ export default class GameScene extends Phaser.Scene {
       // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
       delay: score > 500 ? 50 : 100,
       callback: function() {
-        let enemy = null;
 
         if (Phaser.Math.Between(0, 10) >= 2) {
-          enemy = new Asteroid1(
-              this,
-              // Create enemy avoiding automatic collision
-              Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
-              Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
-          );
+          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid1-anim');
         }
-        else if (Phaser.Math.Between(0, 10) >= 5) {
-          if (this.getEnemiesByType("Asteroid2").length < 3) {
-            enemy = new Asteroid2(
-                this,
-                Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
-                Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
-            );
-          } else {
-            enemy = new Asteroid3(
-                this,
-                Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
-                Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
-            );
-          }
+        else if (Phaser.Math.Between(0, 10) >= 4) {
+          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid2-anim');
         }
-        else {
-          enemy = new Asteroid4(
-              this,
-              Phaser.Math.Between(-6000 + ship.x, 6000 + ship.x),
-              Phaser.Math.Between(-8000 + ship.y, 8000 + ship.y)
-          );
+        else if (Phaser.Math.Between(0, 10) >= 6) {
+          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid3-anim');
+        }
+        else if (Phaser.Math.Between(0, 10) >= 8) {
+          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid4-anim');
         }
 
-        if (enemy !== null) {
-          enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
-          this.enemies.add(enemy);
-        }
       },
       callbackScope: this,
       loop: true
@@ -226,25 +203,12 @@ export default class GameScene extends Phaser.Scene {
       color: '#ffffff',
       align: 'center'
     });
-
     scoreText.setOrigin(0)
     scoreText.setDepth(3);
 
     // Collision/Overlap calls
     this.physics.add.collider(bullets, this.enemies, this.destroyAsteroids, null, this);
     this.physics.add.collider(ship, this.enemies, this.hitByAsteroid, null, this);
-  }
-
-  // Spanning asteroids by type
-  getEnemiesByType(type) {
-    let arr = [];
-    for (let i = 0; i < this.enemies.getChildren().length; i++) {
-      let enemy = this.enemies.getChildren()[i];
-      if (enemy.getData("type") == type) {
-        arr.push(enemy);
-      }
-    }
-    return arr;
   }
 
   // Generate Particles for destruction physics
@@ -265,7 +229,7 @@ export default class GameScene extends Phaser.Scene {
   hitByAsteroid(ship) {
     score = 0;
     this.physics.pause();
-    ship.setTint(0xff0000);
+    ship.disableBody(true, true);
 
     this.particleEmitter('spark0', ship);
     this.particleEmitter('spark1', ship);
@@ -312,9 +276,15 @@ export default class GameScene extends Phaser.Scene {
     for (let i = 0; i < this.enemies.getChildren().length; i++){
       let enemy = this.enemies.getChildren()[i];
 
-      // Add difficulty spike based on the score
-      enemy.x += (score * 0.020) / 2 || 10 * 0.020;
-      enemy.y += (score * 0.020) / 2 || 10 * 0.020;
+      if (enemy.texture.key === 'asteroid1-sheet') {
+        enemy.setVelocityX(200);
+      } else if (enemy.texture.key === 'asteroid2-sheet') {
+        enemy.setVelocityX(-200);
+      } else if (enemy.texture.key === 'asteroid3-sheet') {
+        enemy.setVelocityY(200);
+      } else if (enemy.texture.key === 'asteroid5-sheet') {
+        enemy.setVelocityY(-200);
+      }
 
       if (enemy.x > 6000 || enemy.x < -6000)
       {
