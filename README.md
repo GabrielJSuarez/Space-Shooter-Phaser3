@@ -36,7 +36,7 @@
 
 ## Live Demo
 
-You can visit [here](https://alexisbec.github.io/JS-ToDoList/) our app.
+You can visit [here](https://gabrieljsuarez.github.io/Space-Shooter-Phaser3/) our app.
 
 ## Getting Started
 
