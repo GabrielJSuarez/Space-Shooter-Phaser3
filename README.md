@@ -2,6 +2,10 @@
 
 > An arcade game built with the Phaser 3 Library for game development about a lone survivor that's trying to get home but gets caught in an asteroid belt, compete to survive and get the highest score in the Hall Of Fame,  only the best of the best will be featured in there.
 
+### Video Presentation
+
+🎥 [Video Presentation](https://www.loom.com/share/a6c73a8eb2364b7191579e2c76048c1f)
+
 ![screenshot](./mainScreen.png)
 
 ![screenshot](./optionScreen.png)
