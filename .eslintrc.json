@@ -17,6 +17,8 @@
   },
   "ignorePatterns": [
     "dist/",
-    "build/"
+    "build/",
+    "webpack/",
+    "src/Objects/asyncScores.js"
   ]
 }
