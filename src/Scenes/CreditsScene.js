@@ -1,17 +1,17 @@
-import 'phaser';
+import Phaser from 'phaser';
 import config from '../Config/config';
-import ScrollingBackground from "../Objects/ScrollingBackground";
+import ScrollingBackground from '../Objects/ScrollingBackground';
 
 export default class CreditsScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Credits');
   }
 
-  create () {
+  create() {
     this.backgrounds = [];
-    for (let i = 0; i < 5; i++) {
-      let key = ["background"];
-      let bg = new ScrollingBackground(this, key, i * 10);
+    for (let i = 0; i < 5; i += 1) {
+      const key = ['background'];
+      const bg = new ScrollingBackground(this, key, i * 10);
       this.backgrounds.push(bg);
     }
 
@@ -21,12 +21,12 @@ export default class CreditsScene extends Phaser.Scene {
     this.baseDesignText = this.add.text(0, 0, 'Base Design By: Phaser 3 Library', { fontSize: '26px', fill: '#fff' });
     this.assetsText = this.add.text(0, 0, 'Sound Effects: Phaser 3 Library', { fontSize: '26px', fill: '#fff' });
     this.musicText = this.add.text(0, 0, 'Music: Dafunk - Hardcore Power (DMCA FREE)', { fontSize: '26px', fill: '#fff' });
-    this.zone = this.add.zone(config.width/2, config.height/2, config.width, config.height);
+    this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
     const displayCenter = (text, duration, delay, value = 0, title = null) => {
       Phaser.Display.Align.In.Center(
-          text,
-          this.zone
+        text,
+        this.zone,
       );
       if (value !== 0) text.setY(value);
 
@@ -34,21 +34,20 @@ export default class CreditsScene extends Phaser.Scene {
         targets: text,
         y: -100,
         ease: 'Power1',
-        duration: duration,
-        delay: delay,
+        duration,
+        delay,
         onComplete: () => {
-          this.destroy
+          this.destroy();
           if (title !== null) this.scene.start(title);
-        }
+        },
       });
-
-    }
+    };
 
     displayCenter(this.creditsText, 3000, 1000);
     displayCenter(this.madeByText, 8000, 2000, 1000);
     displayCenter(this.createdText, 8000, 4000, 1200);
     displayCenter(this.baseDesignText, 8000, 6000, 1400);
     displayCenter(this.assetsText, 8000, 8000, 1600);
-    displayCenter(this.musicText,8000, 10000, 1800, 'Title');
+    displayCenter(this.musicText, 8000, 10000, 1800, 'Title');
   }
-};
+}

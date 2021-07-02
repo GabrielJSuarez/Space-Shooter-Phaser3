@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
 export default class Model {
   constructor() {
     this._musicOn = true;

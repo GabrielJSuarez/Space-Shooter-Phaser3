@@ -1,36 +1,36 @@
-import 'phaser';
+import Phaser from 'phaser';
 import config from '../Config/config';
 import Button from '../Objects/Button';
-import ScrollingBackground from "../Objects/ScrollingBackground";
+import ScrollingBackground from '../Objects/ScrollingBackground';
 
 export default class OptionsScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Options');
   }
 
-  create () {
+  create() {
     this.model = this.sys.game.globals.model;
 
-    this.text = this.add.text(config.width/2 - 85, config.height/2 - 250, 'Options', { fontSize: 40 });
+    this.text = this.add.text(config.width / 2 - 85, config.height / 2 - 250, 'Options', { fontSize: 40 });
 
-    this.musicButton = this.add.image(config.width/2 - 110, config.height/2 - 40, 'checkedBox');
-    this.musicText = this.add.text(config.width/2 - 70, config.height/2 - 50, 'Music Enabled', { fontSize: '24px' });
+    this.musicButton = this.add.image(config.width / 2 - 110, config.height / 2 - 40, 'checkedBox');
+    this.musicText = this.add.text(config.width / 2 - 70, config.height / 2 - 50, 'Music Enabled', { fontSize: '24px' });
 
     this.musicButton.setInteractive();
 
-    this.musicButton.on('pointerdown', function () {
+    this.musicButton.on('pointerdown', () => {
       this.model.musicOn = !this.model.musicOn;
       this.updateAudio();
-    }.bind(this));
+    });
 
-    this.menuButton = new Button(this, config.width/2, config.height/2 + 150, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+    this.menuButton = new Button(this, config.width / 2, config.height / 2 + 150, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
     this.updateAudio();
 
     this.backgrounds = [];
-    for (let i = 0; i < 5; i++) {
-      let key = ["background"];
-      let bg = new ScrollingBackground(this, key, i * 10);
+    for (let i = 0; i < 5; i += 1) {
+      const key = ['background'];
+      const bg = new ScrollingBackground(this, key, i * 10);
       this.backgrounds.push(bg);
     }
   }
@@ -48,4 +48,4 @@ export default class OptionsScene extends Phaser.Scene {
       }
     }
   }
-};
+}

@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 
 export default {
   width: 800,
@@ -13,7 +13,7 @@ export default {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
-    }
-  }
+      debug: false,
+    },
+  },
 };
