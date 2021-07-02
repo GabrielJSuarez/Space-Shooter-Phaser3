@@ -19,53 +19,53 @@ export default class GameScene extends Phaser.Scene {
   create ()
   {
     let Bullet = new Phaser.Class({
-          Extends: Phaser.Physics.Arcade.Image,
+      Extends: Phaser.Physics.Arcade.Image,
 
-          initialize:
-              function Bullet (scene)
-              {
-                Phaser.Physics.Arcade.Image.call(this, scene, 0, 0, 'space', 'blaster');
-
-                this.setBlendMode(1);
-                this.setDepth(1);
-
-                this.speed = 1000;
-                this.lifespan = 1000;
-
-                this._temp = new Phaser.Math.Vector2();
-              },
-
-          fire: function (ship)
+      initialize:
+          function Bullet (scene)
           {
-            this.lifespan = 800;
-            this.setActive(true);
-            this.setVisible(true);
-            this.setAngle(ship.body.rotation);
-            this.setPosition(ship.x, ship.y);
-            this.body.reset(ship.x, ship.y);
-            let angle = Phaser.Math.DegToRad(ship.body.rotation);
-            this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity);
-            this.body.velocity.x *= 2;
-            this.body.velocity.y *= 2;
+            Phaser.Physics.Arcade.Image.call(this, scene, 0, 0, 'space', 'blaster');
+
+            this.setBlendMode(1);
+            this.setDepth(1);
+
+            this.speed = 1000;
+            this.lifespan = 1000;
+
+            this._temp = new Phaser.Math.Vector2();
           },
 
-          update: function (time, delta)
-          {
-            this.lifespan -= delta;
-            if (this.lifespan <= 0)
-            {
-              this.setActive(false);
-              this.setVisible(false);
-              this.body.stop();
-            }
-          }
+      fire: function (ship)
+      {
+        this.lifespan = 800;
+        this.setActive(true);
+        this.setVisible(true);
+        this.setAngle(ship.body.rotation);
+        this.setPosition(ship.x, ship.y);
+        this.body.reset(ship.x, ship.y);
+        let angle = Phaser.Math.DegToRad(ship.body.rotation);
+        this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity);
+        this.body.velocity.x *= 2;
+        this.body.velocity.y *= 2;
+      },
+
+      update: function (time, delta)
+      {
+        this.lifespan -= delta;
+        if (this.lifespan <= 0)
+        {
+          this.setActive(false);
+          this.setVisible(false);
+          this.body.stop();
+        }
+      }
 
     });
 
     // Sounds
     this.sfx = {
       explosions: [
-          this.sound.add("explosion")
+        this.sound.add("explosion")
       ],
       laser: this.sound.add("blaster")
     };
@@ -169,30 +169,6 @@ export default class GameScene extends Phaser.Scene {
     // Enemies Group
     this.enemies = this.physics.add.group();
 
-    // Add Enemies
-    this.time.addEvent({
-      // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
-      delay: (score > 300) ? 50 : 100,
-      callback: function() {
-
-        if (Phaser.Math.Between(0, 10) >= 2) {
-          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid1-anim');
-        }
-        else if (Phaser.Math.Between(0, 10) >= 4) {
-          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid2-anim');
-        }
-        else if (Phaser.Math.Between(0, 10) >= 6) {
-          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid3-anim');
-        }
-        else if (Phaser.Math.Between(0, 10) >= 8) {
-          this.enemies.create(Phaser.Math.Between(-6000, 6000), Phaser.Math.Between(-8000, 8000)). play('asteroid4-anim');
-        }
-
-      },
-      callbackScope: this,
-      loop: true
-    });
-
     // Initialize score text
     scoreText = this.add.text(ship.x -380 , ship.y - 280 , "score: ", {
       fontFamily: 'monospace',
@@ -281,12 +257,13 @@ export default class GameScene extends Phaser.Scene {
 
   // Callback Function for asteroids colliding with eachother
   asteroidSelfCollision(asteroid1, asteroid2) {
+
+
     let emitter0 = this.particleEmitter('spark0', asteroid1);
     let emitter1 = this.particleEmitter('spark1', asteroid1);
     let emitter3 = this.particleEmitter('spark0', asteroid2);
     let emitter4 = this.particleEmitter('spark1', asteroid2);
 
-    this.sfx.explosions[Phaser.Math.Between(0, this.sfx.explosions.length - 1)].play();
     asteroid1.destroy();
     asteroid2.destroy();
 
@@ -306,6 +283,30 @@ export default class GameScene extends Phaser.Scene {
 
   update (time, delta)
   {
+    // Add enemies based on ship's position
+    this.time.addEvent({
+      // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
+      delay: 8000,
+      callback: function() {
+
+        if (Phaser.Math.Between(0, 10) >= 2) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid1'). play('asteroid1-anim');
+        }
+        else if (Phaser.Math.Between(0, 10) >= 4) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid2'). play('asteroid2-anim');
+        }
+        else if (Phaser.Math.Between(0, 10) >= 6) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid3'). play('asteroid3-anim');
+        }
+        else if (Phaser.Math.Between(0, 10) >= 8) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid4'). play('asteroid4-anim');
+        }
+
+      },
+      callbackScope: this,
+      loop: true
+    });
+
     // Asteroid Movement, bounds
     for (let i = 0; i < this.enemies.getChildren().length; i++){
       let enemy = this.enemies.getChildren()[i];
@@ -321,12 +322,12 @@ export default class GameScene extends Phaser.Scene {
         enemy.setVelocityY(-200 - (score * 0.1));
       }
 
-      if (enemy.x > 6000 || enemy.x < -6000)
+      if (enemy.x > 6000 + ship.x || enemy.x < -6000 - ship.x)
       {
         enemy.destroy();
       }
 
-      if (enemy.y > 8000 || enemy.y < -8000) {
+      if (enemy.y > 8000 + ship.y || enemy.y < -8000 - ship.y) {
         enemy.destroy();
       }
     }
