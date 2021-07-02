@@ -1,6 +1,6 @@
 {
-  "name": "Surviving Space - A Phaser 3 game",
-  "version": "1.0.2",
+  "name": "Surviving-Space-A-Phaser-3-game",
+  "version": "1.0.0",
   "description": "Space shooter game built with phaser 3",
   "private": true,
   "scripts": {

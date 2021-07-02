@@ -279,30 +279,25 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  update (time, delta)
+  update (time)
   {
     // Add enemies based on ship's position
     this.time.addEvent({
       // Adds a difficulty curve that cuts the spam time in half when the score is greater than 500
       delay: 8000,
-      callback: function() {
-
+      callback() {
         if (Phaser.Math.Between(0, 10) >= 2) {
-          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid1'). play('asteroid1-anim');
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid1').play('asteroid1-anim');
+        } else if (Phaser.Math.Between(0, 10) >= 4) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid2').play('asteroid2-anim');
+        } else if (Phaser.Math.Between(0, 10) >= 6) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid3').play('asteroid3-anim');
+        } else if (Phaser.Math.Between(0, 10) >= 8) {
+          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid4').play('asteroid4-anim');
         }
-        else if (Phaser.Math.Between(0, 10) >= 4) {
-          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid2'). play('asteroid2-anim');
-        }
-        else if (Phaser.Math.Between(0, 10) >= 6) {
-          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid3'). play('asteroid3-anim');
-        }
-        else if (Phaser.Math.Between(0, 10) >= 8) {
-          this.enemies.create((ship.x * 2) + Phaser.Math.Between(-5000, 5000), (ship.y * 2) + Phaser.Math.Between(-5000, 5000), 'asteroid4'). play('asteroid4-anim');
-        }
-
       },
       callbackScope: this,
-      loop: true
+      loop: true,
     });
 
     // Asteroid Movement, bounds
@@ -320,8 +315,7 @@ export default class GameScene extends Phaser.Scene {
         enemy.setVelocityY(-200 - (score * 0.1));
       }
 
-     if (enemy.x > 6000 + ship.x || enemy.x < -6000 - ship.x)
-      {
+      if (enemy.x > 6000 + ship.x || enemy.x < -6000 - ship.x) {
         enemy.destroy();
       }
 
