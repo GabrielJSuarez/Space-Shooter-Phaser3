@@ -8,7 +8,6 @@
     "start": "webpack-dev-server --config webpack/base.js --open",
     "test": "jest"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/photonstorm/phaser3-project-template.git"
