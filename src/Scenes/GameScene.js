@@ -68,7 +68,7 @@ export default class GameScene extends Phaser.Scene {
 
     //  Prepare some spritesheets and animations
 
-    this.textures.addSpriteSheetFromAtlas('mine-sheet', { atlas: 'space', frame: 'mine', frameWidth: 64 });
+    /*this.textures.addSpriteSheetFromAtlas('mine-sheet', { atlas: 'space', frame: 'mine', frameWidth: 64 });
     this.textures.addSpriteSheetFromAtlas('asteroid1-sheet', { atlas: 'space', frame: 'asteroid1', frameWidth: 96 });
     this.textures.addSpriteSheetFromAtlas('asteroid2-sheet', { atlas: 'space', frame: 'asteroid2', frameWidth: 96 });
     this.textures.addSpriteSheetFromAtlas('asteroid3-sheet', { atlas: 'space', frame: 'asteroid3', frameWidth: 96 });
@@ -88,7 +88,7 @@ export default class GameScene extends Phaser.Scene {
     });
     this.anims.create({
       key: 'asteroid4-anim', frames: this.anims.generateFrameNumbers('asteroid4-sheet', { start: 0, end: 23 }), frameRate: 20, repeat: -1,
-    });
+    });*/
 
     //  World size is 8000 x 6000
     bg = this.add.tileSprite(400, 300, 1440, 980, 'background').setScrollFactor(0);
