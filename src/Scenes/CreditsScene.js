@@ -29,18 +29,6 @@ export default class CreditsScene extends Phaser.Scene {
         this.zone,
       );
       if (value !== 0) text.setY(value);
-
-      this.tweens.add({
-        targets: text,
-        y: -100,
-        ease: 'Power1',
-        duration,
-        delay,
-        onComplete: () => {
-          this.destroy();
-          if (title !== null) this.scene.start(title);
-        },
-      });
     };
 
     displayCenter(this.creditsText, 3000, 1000);
@@ -49,5 +37,53 @@ export default class CreditsScene extends Phaser.Scene {
     displayCenter(this.baseDesignText, 8000, 6000, 1400);
     displayCenter(this.assetsText, 8000, 8000, 1600);
     displayCenter(this.musicText, 8000, 10000, 1800, 'Title');
+
+    this.creditsTween = this.tweens.add({
+      targets: this.creditsText,
+      y: -100,
+      ease: 'Power1',
+      duration: 3000,
+      delay: 1000,
+      onComplete: () => this.destroy
+    });
+
+    this.madeByTween = this.tweens.add({
+      targets: this.madeByText,
+      y: -300,
+      ease: 'Power1',
+      duration: 8000,
+      delay: 1000,
+      onComplete: () => this.destroy
+    });
+
+    this.createdTextTweens = this.tweens.add({
+      targets: this.createdText,
+      y: -300,
+      ease: 'Power1',
+      duration: 8000,
+      delay: 2000,
+      onComplete: () => this.destroy
+    });
+
+    this.musicTextTweens = this.tweens.add({
+      targets: this.baseDesignText,
+      y: -300,
+      ease: 'Power1',
+      duration: 8000,
+      delay: 3000,
+      onComplete: () => this.destroy
+    });
+
+    this.musicTextTweens = this.tweens.add({
+      targets: this.assetsText,
+      y: -300,
+      ease: 'Power1',
+      duration: 8000,
+      delay: 4000,
+      onComplete: () => {
+        this.destroy
+        this.scene.start('Title');
+      }
+    });
   }
 }
