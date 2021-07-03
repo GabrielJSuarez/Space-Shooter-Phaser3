@@ -23,7 +23,7 @@ export default class CreditsScene extends Phaser.Scene {
     this.musicText = this.add.text(0, 0, 'Music: Dafunk - Hardcore Power (DMCA FREE)', { fontSize: '26px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.width, config.height);
 
-    const displayCenter = (text, duration, delay, value = 0, title = null) => {
+    const displayCenter = (text, duration, delay, value = 0) => {
       Phaser.Display.Align.In.Center(
         text,
         this.zone,
@@ -44,7 +44,7 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 3000,
       delay: 1000,
-      onComplete: () => this.destroy
+      onComplete: () => this.destroy,
     });
 
     this.madeByTween = this.tweens.add({
@@ -53,7 +53,7 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 8000,
       delay: 1000,
-      onComplete: () => this.destroy
+      onComplete: () => this.destroy,
     });
 
     this.createdTextTweens = this.tweens.add({
@@ -62,7 +62,7 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 8000,
       delay: 2000,
-      onComplete: () => this.destroy
+      onComplete: () => this.destroy,
     });
 
     this.musicTextTweens = this.tweens.add({
@@ -71,7 +71,7 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 8000,
       delay: 3000,
-      onComplete: () => this.destroy
+      onComplete: () => this.destroy,
     });
 
     this.musicTextTweens = this.tweens.add({
@@ -80,10 +80,16 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 8000,
       delay: 4000,
-      onComplete: () => {
-        this.destroy
+      onComplete: () => this.destroy,
+    });
+
+    this.time.addEvent({
+      delay: 10000,
+      callback() {
         this.scene.start('Title');
-      }
+      },
+      callbackScope: this,
+      loop: false,
     });
   }
 }
