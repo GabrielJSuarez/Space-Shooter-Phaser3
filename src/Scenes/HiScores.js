@@ -48,7 +48,7 @@ export default class TitleScene extends Phaser.Scene {
     const renderBoard = (scores) => {
       let separation = 30;
       for (let i = 0; i < scores.length; i += 1) {
-        this.name = this.add.text(this.game.config.width * 0.3, 100 + separation, `${i + 1} - ${scores[i].user}`, {
+        this.name = this.add.text(this.game.config.width * 0.3, 100 + separation, `${i + 1} - User: ${scores[i].user}`, {
           fontFamily: 'monospace',
           fontSize: 28,
           fontStyle: 'bold',
