@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import ScrollingBackground from '../Objects/ScrollingBackground';
-import Button from '../Objects/Button';
-import config from '../Config/config';
 import asyncScores from '../Objects/asyncScores';
 import getDataFromStorage from '../Objects/localStorage';
+
+const myDiv = document.querySelector('.textDiv');
+const setBtn = document.querySelector('#submit-btn');
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -11,6 +12,8 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
+    myDiv.style.display = 'flex';
+
     // Leaderboard Title
     this.title = this.add.text(this.game.config.width * 0.5, 30, 'Hall Of Fame', {
       fontFamily: 'monospace',
@@ -24,25 +27,13 @@ export default class TitleScene extends Phaser.Scene {
     /* eslint no-unused-expressions: ["error", { "allowShortCircuit": true }] */
     getDataFromStorage.getUser() || getDataFromStorage.setUser();
 
-    // Set / Change your username
-    const changeName = () => {
-      // eslint-disable-next-line no-alert
-      const newUser = prompt('Enter your User Name', `${getDataFromStorage.getUser()}`) || getDataFromStorage.getUser();
+    setBtn.addEventListener('click', () => {
+      const userName = document.querySelector('#username').value;
+      const newUser = userName || getDataFromStorage.getUser();
       if (newUser) getDataFromStorage.setUser(newUser);
-    };
-
-    // Username's button
-    // Change Name
-    const nameButton = this.add.sprite(config.width / 2 - 150, config.height / 2 + 200, 'blueButton2');
-    this.add.text(config.width / 2 - 225, config.height / 2 + 185, 'Set Name', { fontSize: '32px', fill: '#fff' });
-
-    // Button interactions
-    nameButton.setInteractive();
-    nameButton.on('pointerdown', () => { changeName(); });
-
-    nameButton.on('pointerover', () => nameButton.setTexture('blueButton2'));
-
-    nameButton.on('pointerout', () => nameButton.setTexture('blueButton1'));
+      myDiv.style.display = 'none';
+      this.scene.start('Game');
+    });
 
     // Render scores in the scene
     const renderBoard = (scores) => {
@@ -80,8 +71,6 @@ export default class TitleScene extends Phaser.Scene {
         renderBoard(sortedResults);
       })
       .catch((error) => error);
-
-    this.menuButton = new Button(this, config.width / 2 + 150, config.height / 2 + 200, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
     this.backgrounds = [];
     for (let i = 0; i < 5; i += 1) {

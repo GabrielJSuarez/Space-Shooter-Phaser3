@@ -3,6 +3,40 @@
   <head>
     <meta charset="utf-8">
   </head>
+  <style>
+    .textDiv {
+      position: absolute;
+      top: 583px;
+      left: 250px;
+      display: none;
+    }
+
+    .textDiv label {
+      color: #fff;
+      padding-right: 30px;
+      font-family: 'monospace', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 18px;
+      font-weight: bolder;
+    }
+
+    .textDiv input {
+      display: block;
+      height: 25px;
+      border-radius: 5px;
+      padding-left: 20px;
+      margin-right: 30px;
+    }
+
+    .textDiv button {
+      background-color: aqua;
+      border-radius: 10%;
+    }
+  </style>
   <body style="background-color: black">
+    <div class="textDiv">
+      <label for="username">Player Name:</label>
+      <input type="text" name="username" id="username" />
+      <button type="submit" id="submit-btn">Start Game</button>
+    </div>
   <script type="text/javascript" src="bundle.min.js"></script></body>
 </html>
